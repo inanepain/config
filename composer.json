@@ -1,0 +1,39 @@
+{
+    "name": "inanepain/config",
+    "description": "Configuration helpers.",
+    "type": "library",
+    "license": "UNLICENSE",
+    "homepage": "http://vaieen.local:3000/inane/config",
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Philip Michael Raab",
+            "email": "peep@inane.co.za",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "peep@inane.co.za",
+        "issues": "http://vaieen.local:3000/iane"
+    },
+    "keywords": [
+        "inane",
+        "config"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Inane\\Config\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "discard-changes": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {}
+}
