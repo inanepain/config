@@ -1,5 +1,13 @@
-# Readme: Config
+# ![icon](./icon.png) inanepain/config
 
-> $Id$ ($Date$)
+Configuration helpers.
 
-See [README.adoc](README.adoc).
+## Install
+
+composer
+
+    composer require inanepain/config
+
+# Revision
+
+    version: $Id$ ($Date$)

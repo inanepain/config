@@ -26,17 +26,7 @@
 
 <<<
 
-:leveloffset: +2
-
-= Install
-
-.composer
-[source,shell]
-----
-composer require inanepain/config
-----
-
-:leveloffset!:
+include::part/install.adoc[leveloffset=+1]
 
 <<<
 

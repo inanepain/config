@@ -1,9 +1,9 @@
-# Changelog: Config
+# 
 
-> version: $Id$ ($Date$)
+Version: $Id$ ($Date$)
 
-## History
+# History
 
-### current: 0.1.0 (2022 Oct 10)
+## 0.1.0 @2022 Oct 10
 
 - initial
