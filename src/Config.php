@@ -24,60 +24,59 @@ declare(strict_types=1);
 
 namespace Inane\Config;
 
-use Inane\Stdlib\ArrayUtil;
 use Inane\Stdlib\Options;
 
+use function file_exists;
 use function glob;
+use function is_string;
 
-use const false;
-use const GLOB_NOSORT;
 use const GLOB_BRACE;
+use const GLOB_NOSORT;
+use const false;
+use const true;
 
+/**
+ * Class Config
+ *
+ * Extends the Options class to provide configuration management functionality.
+ * This class is responsible for handling application configuration options.
+ * 
+ * configuration keys:
+ * - `glob_pattern`: A pattern to match configuration files.
+ * - `allow_modifications`: A boolean indicating whether the configuration can be modified after creation.
+ *
+ * @package inanepain\config
+ */
 class Config extends Options {
     /**
-     * Create config
+     * Creates a new instance of the class from a configuration file.
+     *
+     * @param string      $file      The path to the configuration file. Defaults to 'config/app.config.php'.
+     * @param null|string $configKey The key to use when retrieving configuration data. Defaults to 'config'.
      * 
-     * @param array|\Inane\Stdlib\Options $config options
-     * @param bool $allowModifications allow config modifications.
-     * 
-     * @return static Configuration options
+     * @return static An instance of the class initialized with the configuration data.
      */
-    public static function withArray(array|Options $config, bool $allowModifications = false): static {
-        return new self($config, $allowModifications);
-    }
+    public static function fromConfigFile(string $file = 'config/app.config.php', ?string $configKey = 'config'): static {
+        if (file_exists($file)) {
+            $config = new static(include $file, true);
+            if (!empty($configKey)) {
+                if ($config->offsetExists($configKey)) {
+                    $cfg = $config->get($configKey);
+                    $cfg->complete([
+                        'glob_pattern' => 'config/autoload/{{,*.}global,{,*.}local}.php',
+                        'allow_modifications' => false,
+                    ]);
 
-    /**
-     * Create config
-     * 
-     * @param string $glob_pattern file pattern to use to find config files.
-     * @param bool $allowModifications allow config to be modified.
-     * 
-     * @return static Configuration options
-     */
-    public static function factory(string $glob_pattern = 'config/autoload/{{,*.}global,{,*.}local}.php', bool $allowModifications = false): static {
-        $config = new self([], true);
-        $config->mergeGlob($glob_pattern);
+                    if (is_string($cfg->glob_pattern) && !empty($cfg->glob_pattern)) {
+                        $files = glob($cfg->glob_pattern, GLOB_BRACE | GLOB_NOSORT);
+                        foreach ($files as $file) $config->merge(include $file);
+                    }
 
-        if (!$allowModifications) $config->lock();
+                    if (!$cfg->allow_modifications) $config->lock();
+                }
+            }
+        } else $config = new static([], true);
 
         return $config;
-    }
-    
-    /**
-     * Create config using options from config file.
-     * 
-     * Required fields:
-     * - string - ['config']['glob_pattern']
-     * - bool - ['config']['allowModifications']
-     * 
-     * @param string $configFile file to config building of config
-     * 
-     * @return static Configuration options
-     */
-    public function mergeGlob(string $glob_pattern = 'config/autoload/{{,*.}global,{,*.}local}.php'): self {
-        $files = glob($glob_pattern, GLOB_BRACE | GLOB_NOSORT);
-        foreach ($files as $file) $this->merge(include $file);
-
-        return $this;
     }
 }
