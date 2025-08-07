@@ -1,4 +1,4 @@
-= README: inanepain/config
+= Changelog: inanepain/config
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :description: Configuration helpers.
@@ -20,26 +20,9 @@
 :pkg-name: config
 :pkg-id: {pkg-vendor}/{pkg-name}
 
-== image:./icon.png[title={pkg-id},25] {pkg-id}
+Version: $Id$ ($Date$)
 
-{description}
+== History
 
-<<<
-
-:leveloffset: +1
-
-= Install
-
-.composer
-[source,shell]
-----
-composer require inanepain/config
-----
-
-:leveloffset!:
-
-<<<
-
-== Revision
-
- version: $Id$ ($Date$)
+include::./release/0.2.0.adoc[leveloffset=+2]
+include::./release/0.1.0.adoc[leveloffset=+2]
