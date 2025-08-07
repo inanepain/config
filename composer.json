@@ -34,7 +34,8 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.1"
+        "php": ">=8.4",
+        "inanepain/stdlib": ">=0.6.0 || dev-master || dev-develop"
     },
     "require-dev": {},
     "scripts": {

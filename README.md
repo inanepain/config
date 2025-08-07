@@ -2,7 +2,7 @@
 
 Configuration helpers.
 
-## Install
+# Install
 
 composer
 
