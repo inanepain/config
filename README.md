@@ -6,7 +6,7 @@ Configuration helpers.
 
 composer
 
-    composer require inanepain/config
+composer require inanepain/config
 
 # Revision
 

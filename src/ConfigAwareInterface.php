@@ -74,7 +74,7 @@ declare(strict_types=1);
 
 namespace Inane\Config;
 
-use Laminas\Config\Config;
+use Inane\Stdlib\Array\OptionsInterface;
 
 /**
  * ConfigAwareInterface
@@ -87,9 +87,9 @@ interface ConfigAwareInterface {
 	/**
 	 * configuration
 	 *
-	 * @param array|\Inane\Stdlib\Options|\Laminas\Config\Config $config configuration
+	 * @param array|OptionsInterface $config configuration
 	 *
 	 * @return void
 	 */
-	public function setConfig(array|\Inane\Stdlib\Options|Config $config): void;
+	public function setConfig(array|OptionsInterface $config): void;
 }

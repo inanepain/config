@@ -8,4 +8,4 @@
 :revnumber: 0.2.0
 :revdate: 2025-08-07
 
-- new: `Config` Object to load config directory structure.
+* new: `Config` Object to load config directory structure.

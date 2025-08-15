@@ -1,11 +1,12 @@
-= 0.2.0 (2025 Aug 07)
+= 0.2.0-dev (2025 Aug 07)
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :description: Configuration helpers.
 :keywords: inanepain, library, config
 :copyright: Unlicense
 :homepage: https://git.cathedral.co.za:3000/inanepain/config
-:revnumber: 0.2.0
-:revdate: 2025-08-07
+:revnumber: 0.3.0
+:revdate: 2025-xx-xx
 
-- new: `Config` Object to load config directory structure.
+* new: `Config` Object to load config directory structure.
+* update: `OptionsInterface` used throughout.
