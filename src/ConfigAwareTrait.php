@@ -17,7 +17,7 @@
  * @license UNLICENSE
  * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $version
+ * _version_ $version
  */
 
 declare(strict_types=1);
@@ -30,8 +30,6 @@ use function is_array;
 
 /**
  * ConfigAwareTrait
- *
- * @package Inane\Config
  *
  * @version 0.1.0
  */

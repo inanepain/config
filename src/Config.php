@@ -17,7 +17,7 @@
  * @license UNLICENSE
  * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $version
+ * _version_ $version
  */
 
 declare(strict_types=1);
@@ -44,8 +44,6 @@ use const true;
  * configuration keys:
  * - `glob_pattern`: A pattern to match configuration files.
  * - `allow_modifications`: A boolean indicating whether the configuration can be modified after creation.
- *
- * @package inanepain\config
  */
 class Config extends Options {
     /**

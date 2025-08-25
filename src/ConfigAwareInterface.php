@@ -17,7 +17,7 @@
  * @license UNLICENSE
  * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $version
+ * _version_ $version
  */
 
 /**
@@ -78,8 +78,6 @@ use Inane\Stdlib\Array\OptionsInterface;
 
 /**
  * ConfigAwareInterface
- *
- * @package Inane\Config
  *
  * @version 0.1.0
  */
