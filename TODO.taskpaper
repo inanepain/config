@@ -1,3 +1,2 @@
-inanepain\config:
+inanepain/config:
   Configuration helpers.
-  - basic implementation @version(0.1.0)
