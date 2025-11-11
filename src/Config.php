@@ -44,6 +44,8 @@ use const true;
  * configuration keys:
  * - `glob_pattern`: A pattern to match configuration files.
  * - `allow_modifications`: A boolean indicating whether the configuration can be modified after creation.
+ *
+ * @version 0.3.0
  */
 class Config extends Options {
     /**
@@ -76,5 +78,18 @@ class Config extends Options {
         } else $config = new static([], true);
 
         return $config;
+    }
+
+	/**
+	 * Retrieves the configuration for the specified class.
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param string $class The class name for which the configuration is being retrieved.
+	 *
+	 * @return static|null The configuration instance if it exists, or null otherwise.
+	 */
+	public function getConfig(string $class): ?static {
+        return $this->get($class);
     }
 }

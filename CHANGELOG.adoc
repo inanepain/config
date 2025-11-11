@@ -36,6 +36,7 @@
 :revdate: 2025-xx-xx
 
 * new: `Config` Object to load config directory structure.
+* new: `Config::getConfig` get class-specific configuration.
 * update: `OptionsInterface` used throughout.
 
 :leveloffset!:
