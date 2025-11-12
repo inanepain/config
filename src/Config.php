@@ -47,7 +47,9 @@ use const true;
  *
  * @version 0.3.0
  */
-class Config extends Options {
+class Config extends Options implements ConfigInterface {
+    protected ?string $components = 'components';
+
     /**
      * Creates a new instance of the class from a configuration file.
      *
@@ -90,6 +92,9 @@ class Config extends Options {
 	 * @return static|null The configuration instance if it exists, or null otherwise.
 	 */
 	public function getConfig(string $class): ?static {
-        return $this->get($class);
+        if ($components = $this->components ? $this?->get($this->components) : $this) {
+            return $components?->get($class);
+        }
+        return null;
     }
 }
