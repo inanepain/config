@@ -3,7 +3,7 @@
     "description": "Configuration helpers.",
     "type": "library",
     "license": "Unlicense",
-    "homepage": "https://github.com/inanepain/config",
+    "homepage": "https://git.cathedral.co.za:3000/inanepain/config",
     "readme": "README.adoc",
     "authors": [
         {
@@ -14,7 +14,7 @@
     ],
     "support": {
         "email": "philip@cathedral.co.za",
-        "issues": "https://github.com/inanepain"
+        "issues": "https://git.cathedral.co.za:3000/inanepain/config/issues"
     },
     "keywords": [
         "inanepain",
@@ -57,8 +57,6 @@
             "rm -f CHANGELOG.adoc",
             "asciidoctor-reducer -o CHANGELOG.adoc doc/changelog/index.adoc",
             "asciidoctor -b docbook CHANGELOG.adoc",
-            "# rm -f CHANGELOG.md",
-            "# pandoc -f docbook -t markdown_strict CHANGELOG.xml -o CHANGELOG.md",
             "rm -f CHANGELOG.xml"
         ],
         "build-readme": [
@@ -66,8 +64,6 @@
             "rm -f README.adoc",
             "asciidoctor-reducer -o README.adoc doc/readme/index.adoc",
             "asciidoctor -b docbook README.adoc",
-            "# rm -f README.md",
-            "# pandoc -f docbook -t markdown_strict README.xml -o README.md",
             "rm -f README.xml"
         ]
     }
