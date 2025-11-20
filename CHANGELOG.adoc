@@ -5,8 +5,8 @@
 :keywords: inanepain, library, config
 :copyright: Unlicense
 :homepage: https://git.cathedral.co.za:3000/inanepain/config
-:revnumber: 0.3.0
-:revdate: 2025-11-20
+:revnumber: 0.4.0
+:revdate: 2025-xx-xx
 // :revremark: -dev
 // :version-label: Unconfirmed
 :experimental:
@@ -23,6 +23,13 @@
 
 == History
 
+:leveloffset: +2
+
+= 0.4.0-dev (2025 Xxx xx)
+:revnumber: 0.4.0
+:revdate: 2025-xx-xx
+
+:leveloffset!:
 :leveloffset: +2
 
 = 0.3.0 (2025 Nov 20)

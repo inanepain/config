@@ -1,7 +1,3 @@
-= 0.3.0-dev (2025 Nov 20)
-:revnumber: 0.3.0
+= 0.4.0-dev (2025 Xxx xx)
+:revnumber: 0.4.0
 :revdate: 2025-xx-xx
-
-* new: `Config` Object to load config directory structure.
-* new: `Config::getConfig` get class-specific configuration.
-* update: `OptionsInterface` used throughout.
