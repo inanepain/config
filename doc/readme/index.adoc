@@ -6,7 +6,7 @@
 :copyright: Unlicense
 :homepage: https://git.cathedral.co.za:3000/inanepain/config
 :revnumber: 0.3.0
-:revdate: 2025-08-15
+:revdate: 2025-11-20
 :experimental:
 :hide-uri-scheme:
 :icons: font
