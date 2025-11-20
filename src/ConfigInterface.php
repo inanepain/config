@@ -26,27 +26,18 @@ namespace Inane\Config;
 
 use Inane\Stdlib\Array\OptionsInterface;
 
-use function is_array;
-
 /**
- * ConfigAwareTrait
+ * ConfigInterface
  *
  * @version 0.1.0
  */
-trait ConfigAwareTrait {
+interface ConfigInterface extends OptionsInterface {
 	/**
-	 * Configuration
+	 * get configuration for class
 	 *
-	 * @var array|OptionsInterface
+	 * @param class-string $class class string.
+	 *
+	 * @return null|static configuration or null if not found.
 	 */
-	protected array|OptionsInterface $config;
-
-	/**
-	 * {@inheritDoc}
-	 * @see \Inane\Config\ConfigAwareInterface::setConfig()
-	 */
-	public function setConfig(array|OptionsInterface $config): void {
-		if (is_array($config)) $this->config = new \Inane\Config\Config($config);
-		else $this->config = $config;
-	}
+	public function getConfig(string $class): ?static;
 }

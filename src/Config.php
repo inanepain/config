@@ -17,7 +17,7 @@
  * @license UNLICENSE
  * @license https://unlicense.org/UNLICENSE UNLICENSE
  *
- * @version $version
+ * _version_ $version
  */
 
 declare(strict_types=1);
@@ -45,9 +45,11 @@ use const true;
  * - `glob_pattern`: A pattern to match configuration files.
  * - `allow_modifications`: A boolean indicating whether the configuration can be modified after creation.
  *
- * @package inanepain\config
+ * @version 0.3.0
  */
-class Config extends Options {
+class Config extends Options implements ConfigInterface {
+    protected ?string $components = 'components';
+
     /**
      * Creates a new instance of the class from a configuration file.
      *
@@ -78,5 +80,21 @@ class Config extends Options {
         } else $config = new static([], true);
 
         return $config;
+    }
+
+	/**
+	 * Retrieves the configuration for the specified class.
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param string $class The class name for which the configuration is being retrieved.
+	 *
+	 * @return static|null The configuration instance if it exists, or null otherwise.
+	 */
+	public function getConfig(string $class): ?static {
+        if ($components = $this->components ? $this?->get($this->components) : $this) {
+            return $components?->get($class);
+        }
+        return null;
     }
 }

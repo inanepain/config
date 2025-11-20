@@ -1,3 +1,2 @@
-Inane\Config:
-	Configuration helpers.
-	- basic implementation @version(0.1.0)
+inanepain/config:
+  Configuration helpers.

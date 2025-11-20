@@ -1,4 +1,4 @@
-= 0.1.0 @2022 Oct 10
+= 0.1.0 (2022 Oct 10)
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :description: Configuration helpers.
@@ -8,4 +8,4 @@
 :revnumber: 0.1.0
 :revdate: 2022-10-10
 
-- initial
+* initial
