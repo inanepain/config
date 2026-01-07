@@ -40,7 +40,7 @@ use const true;
  *
  * Extends the Options class to provide configuration management functionality.
  * This class is responsible for handling application configuration options.
- * 
+ *
  * configuration keys:
  * - `glob_pattern`: A pattern to match configuration files.
  * - `allow_modifications`: A boolean indicating whether the configuration can be modified after creation.
@@ -48,14 +48,14 @@ use const true;
  * @version 0.3.0
  */
 class Config extends Options implements ConfigInterface {
-    protected ?string $components = 'components';
+    protected ?string $configComponentsRootPath = 'components';
 
     /**
      * Creates a new instance of the class from a configuration file.
      *
      * @param string      $file      The path to the configuration file. Defaults to 'config/app.config.php'.
      * @param null|string $configKey The key to use when retrieving configuration data. Defaults to 'config'.
-     * 
+     *
      * @return static An instance of the class initialized with the configuration data.
      */
     public static function fromConfigFile(string $file = 'config/app.config.php', ?string $configKey = 'config'): static {
@@ -92,7 +92,7 @@ class Config extends Options implements ConfigInterface {
 	 * @return static|null The configuration instance if it exists, or null otherwise.
 	 */
 	public function getConfig(string $class): ?static {
-        if ($components = $this->components ? $this?->get($this->components) : $this) {
+        if ($components = $this->configComponentsRootPath ? $this?->get($this->configComponentsRootPath) : $this) {
             return $components?->get($class);
         }
         return null;
