@@ -25,13 +25,14 @@ declare(strict_types=1);
 namespace Inane\Config;
 
 use Inane\Stdlib\Array\OptionsInterface;
-
+use Inane\Stdlib\Options;
 use function is_array;
+use function property_exists;
 
 /**
  * ConfigAwareTrait
  *
- * @version 0.1.0
+ * @version 0.4.0
  */
 trait ConfigAwareTrait {
 	/**
@@ -44,9 +45,17 @@ trait ConfigAwareTrait {
 	/**
 	 * {@inheritDoc}
 	 * @see \Inane\Config\ConfigAwareInterface::setConfig()
+     *
+     * @since 0.4.0 Looks for defaultConfig property to use as fallback and default values.
 	 */
 	public function setConfig(array|OptionsInterface $config): void {
-		if (is_array($config)) $this->config = new \Inane\Config\Config($config);
-		else $this->config = $config;
+        $class = Config::class;
+        if (!is_array($config) && $config instanceof Options) $class = Options::class;
+
+        if (!isset($this->config)) $this->config = new $class([]);
+        if (!$this->config->isLocked()) {
+            $this->config = new $class(property_exists($this, 'defaultConfig') ? $this->defaultConfig : [])->merge($config);
+            $this->config->lock();
+        }
 	}
 }

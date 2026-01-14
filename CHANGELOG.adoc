@@ -29,6 +29,8 @@
 :revnumber: 0.4.0
 :revdate: 2025-xx-xx
 
+* update: `ConfigAwareTrait::setConfig` check for property `defaultConfig` to use as the config base options.
+
 :leveloffset!:
 :leveloffset: +2
 
