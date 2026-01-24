@@ -8,7 +8,7 @@
  * $Id$
  * $Date$
  *
- * PHP version 8.4
+ * PHP version 8.5
  *
  * @author Philip Michael Raab<philip@cathedral.co.za>
  * @package inanepain\config
@@ -29,8 +29,27 @@ use Attribute;
 /**
  * ConfigAwareAttribute
  *
- * @version 0.1.0
+ * @version 0.2.0
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-class ConfigAwareAttribute {
+readonly class ConfigAwareAttribute {
+    /**
+     * Constructor for the class.
+     *
+     * @param bool $globalConfig Whether to use global configuration.
+     *                           - false - looks for class-specific configuration
+     *                           - true - uses global configuration
+     *
+     * @return void
+     */
+    public function __construct(
+        /**
+         * Whether to use global configuration.
+         * - false - looks for class-specific configuration
+         * - true - uses global configuration
+         */
+        public bool $globalConfig = false,
+    ) {
+
+    }
 }
