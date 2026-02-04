@@ -4,9 +4,9 @@
 :description: Configuration helpers.
 :keywords: inanepain, library, config
 :copyright: Unlicense
-:homepage: https://git.cathedral.co.za:3000/inanepain/config
-:revnumber: 0.3.0
-:revdate: 2025-11-20
+:homepage: https://github.com/inanepain/config
+:revnumber: 0.4.0
+:revdate: 2026-02-04
 :experimental:
 :hide-uri-scheme:
 :icons: font
