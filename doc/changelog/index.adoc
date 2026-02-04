@@ -7,8 +7,6 @@
 :homepage: https://github.com/inanepain/config
 :revnumber: 0.4.0
 :revdate: 2026-02-04
-// :revremark: -dev
-// :version-label: Unconfirmed
 :experimental:
 :hide-uri-scheme:
 :icons: font
@@ -23,6 +21,7 @@
 
 == History
 
+include::./release/0.0.0.adoc[leveloffset=+2]
 include::./release/0.4.0.adoc[leveloffset=+2]
 include::./release/0.3.0.adoc[leveloffset=+2]
 include::./release/0.2.0.adoc[leveloffset=+2]

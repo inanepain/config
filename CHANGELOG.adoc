@@ -7,8 +7,6 @@
 :homepage: https://github.com/inanepain/config
 :revnumber: 0.4.0
 :revdate: 2026-02-04
-// :revremark: -dev
-// :version-label: Unconfirmed
 :experimental:
 :hide-uri-scheme:
 :icons: font
@@ -23,6 +21,16 @@
 
 == History
 
+:leveloffset: +2
+
+= 0.5.0-dev (2026 Xxx xx)
+:revnumber: 0.5.0
+:revdate: 2026-xx-xx
+:revremark: -dev
+:version-label: Unconfirmed
+
+
+:leveloffset!:
 :leveloffset: +2
 
 = 0.4.0 (2026 Feb 04)
