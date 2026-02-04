@@ -1,0 +1,7 @@
+= 0.4.0 (2026 Feb 04)
+:revnumber: 0.4.0
+:revdate: 2026-02-04
+
+* update: `ConfigAwareTrait::setConfig` check for property `defaultConfig` to use as the config base options.
+* new: `ConfigAwareAttribute::globalConfig` Whether to use global or class-specific configuration.
+* update: *README* has been greatly improved.
