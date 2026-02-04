@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace Inane\Config;
+namespace Inane\Config\ConfigAware;
 
 use Attribute;
 
@@ -50,6 +50,5 @@ readonly class ConfigAwareAttribute {
          */
         public bool $globalConfig = false,
     ) {
-
     }
 }

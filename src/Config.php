@@ -25,14 +25,12 @@ declare(strict_types=1);
 namespace Inane\Config;
 
 use Inane\Stdlib\Options;
-
 use function file_exists;
 use function glob;
 use function is_string;
-
+use const false;
 use const GLOB_BRACE;
 use const GLOB_NOSORT;
-use const false;
 use const true;
 
 /**
@@ -82,16 +80,16 @@ class Config extends Options implements ConfigInterface {
         return $config;
     }
 
-	/**
-	 * Retrieves the configuration for the specified class.
-	 *
-	 * @since 0.3.0
-	 *
-	 * @param string $class The class name for which the configuration is being retrieved.
-	 *
-	 * @return static|null The configuration instance if it exists, or null otherwise.
-	 */
-	public function getConfig(string $class): ?static {
+    /**
+     * Retrieves the configuration for the specified class.
+     *
+     * @since 0.3.0
+     *
+     * @param string $class The class name for which the configuration is being retrieved.
+     *
+     * @return static|null The configuration instance if it exists, or null otherwise.
+     */
+    public function getConfig(string $class): ?static {
         if ($components = $this->configComponentsRootPath ? $this?->get($this->configComponentsRootPath) : $this) {
             return $components?->get($class);
         }
