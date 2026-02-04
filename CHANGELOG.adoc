@@ -25,12 +25,13 @@
 
 :leveloffset: +2
 
-= 0.4.0-dev (2025 Xxx xx)
+= 0.4.0-dev (2026 Xxx xx)
 :revnumber: 0.4.0
 :revdate: 2026-xx-xx
 
 * update: `ConfigAwareTrait::setConfig` check for property `defaultConfig` to use as the config base options.
 * new: `ConfigAwareAttribute::globalConfig` Whether to use global or class-specific configuration.
+* update: *README* has been greatly improved.
 
 :leveloffset!:
 :leveloffset: +2

@@ -23,6 +23,7 @@
 
 {description}
 
+:sectnums:
 <<<
 
 :leveloffset: +1
@@ -39,6 +40,236 @@ composer require {pkg-id}
 
 <<<
 
-== Revision
+:leveloffset: +1
 
- version: $Id$ ($Date$)
+= Config
+
+The `Inane\\Config\\Config` class is a small helper built on top of `Inane\\Stdlib\\Options`.
+It is used to:
+
+* load configuration from a base config file
+* merge additional config files (via a `glob_pattern`)
+* (optionally) lock the configuration to prevent further modifications
+* provide a convention for *component/class specific* configuration via `getConfig()`
+
+The public API is intentionally small:
+
+* `Config::fromConfigFile()` loads/merges/locks
+* `Config::getConfig()` returns a configuration subset for a specific class
+
+== Loading configuration from files
+
+The default entry point is `Config::fromConfigFile()`:
+
+[source,php]
+----
+use Inane\Config\Config;
+
+$config = Config::fromConfigFile();
+----
+
+By default it looks for `config/app.config.php`.
+
+The base config file is expected to return an array (or something compatible with `Options`), e.g.:
+
+[source,php]
+----
+// config/app.config.php
+
+return [
+    // the default key inspected by Config::fromConfigFile()
+    'config' => [
+        // Optional: extra files to merge in (glob brace patterns supported)
+        'glob_pattern'        => 'config/autoload/{{,*.}global,{,*.}local}.php',
+
+        // Optional: prevent modifications after initial loading
+        'allow_modifications' => false,
+    ],
+
+    // application config (example)
+    'appId'    => 'inane-fw',
+    'services' => [
+        // ...
+    ],
+];
+----
+
+If `glob_pattern` is set and matches files, each matching file is included and merged into the main config.
+
+=== Config file merge order
+
+The default `glob_pattern` merges `\*.global.php` before `\*.local.php` allowing for default configurations to be overridden with local ones. It is recommended to have a `.gitignore` file in the autoload directory to ignore `\*.local.php` in your commits.
+
+..gitignore for autoload directory
+[source,git]
+----
+local.php
+*.local.php
+----
+
+== Locking and modifications
+
+If `allow_modifications` is `false` (the default), `Config::fromConfigFile()` locks the configuration after loading/merging.
+This is a convenience to ensure your configuration is treated as immutable during runtime.
+
+If you need a mutable config instance (for tests or dynamic environments), set:
+
+[source,php]
+----
+return [
+    'config' => [
+        'allow_modifications' => true,
+    ],
+];
+----
+
+== Component / class-specific configuration
+
+`Config::getConfig(string $class)` is a convention for retrieving configuration scoped to a specific class.
+
+By default, it looks under the `components` key and then under the given class name:
+
+[source,php]
+----
+use Inane\Config\Config;
+
+/** @var Config $config */
+$serviceManagerConfig = $config->getConfig(Inane\Services\ServiceManager::class);
+----
+
+That means your config can be structured like this:
+
+[source,php]
+----
+return [
+    'components' => [
+        Inane\Services\ServiceManager::class => [
+            'cache' => true,
+            'debug' => false,
+        ],
+    ],
+];
+----
+
+NOTE: `getConfig()` returns `null` when no matching config is found.
+If you rely on class-specific config injection (see `ConfigAware` below), ensure the config entry exists for that class, or use global injection instead.
+
+:leveloffset!:
+
+<<<
+
+:leveloffset: +1
+
+= ConfigAware helpers
+
+The `ConfigAware` helpers provide a lightweight, opt-in way to inject configuration into objects.
+
+They are designed to work with `Inane\\Config\\Config` but can also accept plain arrays or `Inane\\Stdlib\\Options`.
+
+== Interface: `ConfigAwareInterface`
+
+To be configurable, a class can implement `Inane\\Config\\ConfigAware\\ConfigAwareInterface`:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareInterface;
+use Inane\Stdlib\Array\OptionsInterface;
+
+class MyComponent implements ConfigAwareInterface {
+    public function setConfig(array|OptionsInterface $config): void {
+        // store config / initialise component
+    }
+}
+----
+
+== Trait: `ConfigAwareTrait`
+
+Most classes will use the provided trait instead of implementing the storage/locking logic themselves.
+
+The trait:
+
+* stores config in `$this->config`
+* merges the provided config with an optional `$defaultConfig` property
+* locks the config after it is set (to keep it effectively immutable)
+
+Example:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareInterface;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+use Inane\Stdlib\Array\OptionsInterface;
+
+class MyComponent implements ConfigAwareInterface {
+    use ConfigAwareTrait;
+
+    // Optional: default/fallback config values
+    protected array $defaultConfig = [
+        'enabled' => true,
+        'ttl'     => 60,
+    ];
+
+    public function isEnabled(): bool {
+        return (bool)($this->config->enabled ?? false);
+    }
+}
+----
+
+NOTE: `ConfigAwareTrait::setConfig()` only applies once: after the internal config is locked, subsequent calls have no effect.
+
+== Attribute: `ConfigAwareAttribute`
+
+`Inane\\Config\\ConfigAware\\ConfigAwareAttribute` is a class attribute that can be used by a bootstrapper/container to decide *how* to inject configuration.
+
+It has a single flag:
+
+* `globalConfig=false` (default): inject config scoped to the class via `Config::getConfig(ClassName::class)`
+* `globalConfig=true`: inject the global config instance as-is
+
+Example — global config injection:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareAttribute;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+
+#[ConfigAwareAttribute(true)]
+class ServiceManager {
+    use ConfigAwareTrait;
+}
+----
+
+Example — class-specific injection:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareAttribute;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+
+#[ConfigAwareAttribute]
+class MyComponent {
+    use ConfigAwareTrait;
+}
+----
+
+With class-specific injection, ensure your configuration provides a matching entry under `components`:
+
+[source,php]
+----
+return [
+    'components' => [
+        MyComponent::class => [
+            'enabled' => true,
+        ],
+    ],
+];
+----
+
+IMPORTANT: In the framework bootstrap implementation (see `Knot\\Application::bootstrapObject()`), when `globalConfig=false` the injector calls:
+
+`$object->setConfig($config->getConfig($object::class));`
+
+Since `getConfig()` can return `null`, class-specific injection requires that the class has a config entry.
+If you want a safe default without providing a `components` entry, prefer `#[ConfigAwareAttribute(true)]` and/or provide a `$defaultConfig` property on the class.
+
+:leveloffset!:

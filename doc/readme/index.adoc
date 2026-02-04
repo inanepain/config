@@ -23,12 +23,15 @@
 
 {description}
 
+:sectnums:
 <<<
 
 include::part/install.adoc[leveloffset=+1]
 
 <<<
 
-== Revision
+include::part/config.adoc[leveloffset=+1]
 
- version: $Id$ ($Date$)
+<<<
+
+include::part/configaware.adoc[leveloffset=+1]
