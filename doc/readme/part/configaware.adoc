@@ -1,0 +1,111 @@
+= ConfigAware helpers
+
+The `ConfigAware` helpers provide a lightweight, opt-in way to inject configuration into objects.
+
+They are designed to work with `Inane\\Config\\Config` but can also accept plain arrays or `Inane\\Stdlib\\Options`.
+
+== Interface: `ConfigAwareInterface`
+
+To be configurable, a class can implement `Inane\\Config\\ConfigAware\\ConfigAwareInterface`:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareInterface;
+use Inane\Stdlib\Array\OptionsInterface;
+
+class MyComponent implements ConfigAwareInterface {
+    public function setConfig(array|OptionsInterface $config): void {
+        // store config / initialise component
+    }
+}
+----
+
+== Trait: `ConfigAwareTrait`
+
+Most classes will use the provided trait instead of implementing the storage/locking logic themselves.
+
+The trait:
+
+* stores config in `$this->config`
+* merges the provided config with an optional `$defaultConfig` property
+* locks the config after it is set (to keep it effectively immutable)
+
+Example:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareInterface;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+use Inane\Stdlib\Array\OptionsInterface;
+
+class MyComponent implements ConfigAwareInterface {
+    use ConfigAwareTrait;
+
+    // Optional: default/fallback config values
+    protected array $defaultConfig = [
+        'enabled' => true,
+        'ttl'     => 60,
+    ];
+
+    public function isEnabled(): bool {
+        return (bool)($this->config->enabled ?? false);
+    }
+}
+----
+
+NOTE: `ConfigAwareTrait::setConfig()` only applies once: after the internal config is locked, subsequent calls have no effect.
+
+== Attribute: `ConfigAwareAttribute`
+
+`Inane\\Config\\ConfigAware\\ConfigAwareAttribute` is a class attribute that can be used by a bootstrapper/container to decide *how* to inject configuration.
+
+It has a single flag:
+
+* `globalConfig=false` (default): inject config scoped to the class via `Config::getConfig(ClassName::class)`
+* `globalConfig=true`: inject the global config instance as-is
+
+Example — global config injection:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareAttribute;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+
+#[ConfigAwareAttribute(true)]
+class ServiceManager {
+    use ConfigAwareTrait;
+}
+----
+
+Example — class-specific injection:
+
+[source,php]
+----
+use Inane\Config\ConfigAware\ConfigAwareAttribute;
+use Inane\Config\ConfigAware\ConfigAwareTrait;
+
+#[ConfigAwareAttribute]
+class MyComponent {
+    use ConfigAwareTrait;
+}
+----
+
+With class-specific injection, ensure your configuration provides a matching entry under `components`:
+
+[source,php]
+----
+return [
+    'components' => [
+        MyComponent::class => [
+            'enabled' => true,
+        ],
+    ],
+];
+----
+
+IMPORTANT: In the framework bootstrap implementation (see `Knot\\Application::bootstrapObject()`), when `globalConfig=false` the injector calls:
+
+`$object->setConfig($config->getConfig($object::class));`
+
+Since `getConfig()` can return `null`, class-specific injection requires that the class has a config entry.
+If you want a safe default without providing a `components` entry, prefer `#[ConfigAwareAttribute(true)]` and/or provide a `$defaultConfig` property on the class.

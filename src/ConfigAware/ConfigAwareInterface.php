@@ -8,7 +8,7 @@
  * $Id$
  * $Date$
  *
- * PHP version 8.4
+ * PHP version 8.5
  *
  * @author Philip Michael Raab<philip@cathedral.co.za>
  * @package inanepain\config
@@ -22,15 +22,22 @@
 
 declare(strict_types=1);
 
-namespace Inane\Config;
+namespace Inane\Config\ConfigAware;
 
-use Attribute;
+use Inane\Stdlib\Array\OptionsInterface;
 
 /**
- * ConfigAwareAttribute
+ * ConfigAwareInterface
  *
  * @version 0.1.0
  */
-#[Attribute(Attribute::TARGET_CLASS)]
-class ConfigAwareAttribute {
+interface ConfigAwareInterface {
+	/**
+	 * configuration
+	 *
+	 * @param array|OptionsInterface $config configuration
+	 *
+	 * @return void
+	 */
+	public function setConfig(array|OptionsInterface $config): void;
 }
