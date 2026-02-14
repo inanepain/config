@@ -1,10 +1,10 @@
-= README: inanepain/config
+= inanepain/config image:./icon.png[title=inanepain/xxx,25]
 :author: Philip Michael Raab
 :email: <philip@cathedral.co.za>
 :description: Configuration helpers.
 :keywords: inanepain, library, config
-:copyright: Unlicense
 :homepage: https://github.com/inanepain/config
+:copyright: Unlicense
 :revnumber: 0.4.0
 :revdate: 2026-02-04
 :experimental:
@@ -24,6 +24,7 @@
 {description}
 
 :sectnums:
+
 <<<
 
 include::part/install.adoc[leveloffset=+1]
