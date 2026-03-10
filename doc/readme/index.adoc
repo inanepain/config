@@ -35,4 +35,12 @@ include::part/config.adoc[leveloffset=+1]
 
 <<<
 
+include::part/configmanager.adoc[leveloffset=+1]
+
+<<<
+
 include::part/configaware.adoc[leveloffset=+1]
+
+<<<
+
+include::part/exceptions.adoc[leveloffset=+1]

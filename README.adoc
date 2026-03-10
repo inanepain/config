@@ -161,6 +161,68 @@ If you rely on class-specific config injection (see `ConfigAware` below), ensure
 
 :leveloffset: +1
 
+:= ConfigManager
+
+`Inane\\Config\\ConfigManager` is a small singleton that centralises configuration access and *attribute-based injection*.
+
+It is primarily useful in bootstrapping code where you want to:
+
+* create/load one `ConfigInterface` instance (typically `Config::fromConfigFile()`)
+* inject either global config *or* class-specific config into objects marked with `#[ConfigAwareAttribute]`
+
+== Creating and initialising the manager
+
+The manager is a singleton:
+
+[source,php]
+----
+use Inane\Config\Config;
+use Inane\Config\ConfigManager;
+
+$config = Config::fromConfigFile();
+
+$configManager = ConfigManager::instance()
+    ->setConfig($config);
+----
+
+If you don’t call `setConfig()` yourself, `setConfigFor()` will lazily initialise the manager with `Config::fromConfigFile()`.
+
+== Injecting configuration into an object
+
+`ConfigManager::setConfigFor(object $object)` inspects the object via reflection and looks for the `ConfigAwareAttribute`.
+
+When found, it will call `setConfig()` on the object:
+
+* with the *global config* when the attribute requests global injection
+* otherwise with the config subset returned by `Config::getConfig(<key>)`
+
+In the framework, this is used during bootstrapping (see `Knot\\Application::bootstrapObject()`).
+
+IMPORTANT: `Config::getConfig()` returns `null` when no matching config is found.
+If you use class-specific injection, ensure you provide a matching entry under `components`.
+
+== Retrieving configuration from the manager
+
+You can retrieve the manager’s configured `ConfigInterface` via `getConfig()`.
+
+[source,php]
+----
+use Inane\Config\ConfigManager;
+
+$config = ConfigManager::instance()->getConfig();
+----
+
+When you pass a `$key`, the manager will first check that a configuration subset exists for that key.
+If it does not, it throws `Inane\\Config\\Exception\\ConfigNotFoundException`.
+
+NOTE: To actually *use* the subset, call `Config::getConfig($key)` directly on the returned config instance.
+
+:leveloffset!:
+
+<<<
+
+:leveloffset: +1
+
 = ConfigAware helpers
 
 The `ConfigAware` helpers provide a lightweight, opt-in way to inject configuration into objects.
@@ -272,5 +334,37 @@ IMPORTANT: In the framework bootstrap implementation (see `Knot\\Application::bo
 
 Since `getConfig()` can return `null`, class-specific injection requires that the class has a config entry.
 If you want a safe default without providing a `components` entry, prefer `#[ConfigAwareAttribute(true)]` and/or provide a `$defaultConfig` property on the class.
+
+:leveloffset!:
+
+<<<
+
+:leveloffset: +1
+
+:= Exceptions
+
+== `ConfigNotFoundException`
+
+`Inane\\Config\\Exception\\ConfigNotFoundException` is thrown when a requested configuration is missing.
+
+It extends `Inane\\Stdlib\\Exception\\ConfigurationException`.
+
+The exception is currently used by `ConfigManager::getConfig($key)` to fail fast when a class/component-specific configuration key does not exist.
+
+[source,php]
+----
+use Inane\Config\ConfigManager;
+use Inane\Config\Exception\ConfigNotFoundException;
+
+try {
+    // Validate that the component config exists
+    $config = ConfigManager::instance()->getConfig(MyComponent::class);
+
+    // Access the component-specific config via Config::getConfig()
+    $componentConfig = $config->getConfig(MyComponent::class);
+} catch (ConfigNotFoundException $e) {
+    // handle missing configuration (provide defaults, abort startup, etc.)
+}
+----
 
 :leveloffset!:

@@ -1,0 +1,25 @@
+:= Exceptions
+
+== `ConfigNotFoundException`
+
+`Inane\\Config\\Exception\\ConfigNotFoundException` is thrown when a requested configuration is missing.
+
+It extends `Inane\\Stdlib\\Exception\\ConfigurationException`.
+
+The exception is currently used by `ConfigManager::getConfig($key)` to fail fast when a class/component-specific configuration key does not exist.
+
+[source,php]
+----
+use Inane\Config\ConfigManager;
+use Inane\Config\Exception\ConfigNotFoundException;
+
+try {
+    // Validate that the component config exists
+    $config = ConfigManager::instance()->getConfig(MyComponent::class);
+
+    // Access the component-specific config via Config::getConfig()
+    $componentConfig = $config->getConfig(MyComponent::class);
+} catch (ConfigNotFoundException $e) {
+    // handle missing configuration (provide defaults, abort startup, etc.)
+}
+----

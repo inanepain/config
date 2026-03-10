@@ -8,7 +8,7 @@
  * $Id$
  * $Date$
  *
- * PHP version 8.4
+ * PHP version 8.5
  *
  * @author Philip Michael Raab<philip@cathedral.co.za>
  * @package inanepain\config
@@ -54,7 +54,7 @@ class Config extends Options implements ConfigInterface {
      * Creates a new instance of the class from a configuration file.
      *
      * @param string      $file      The path to the configuration file. Defaults to 'config/app.config.php'.
-     * @param null|string $configKey The key to use when retrieving configuration data. Defaults to 'config'.
+     * @param null|string $configKey The key that holds the configuration for loading the extended configuration files. Defaults to 'config'.
      *
      * @return static An instance of the class initialized with the configuration data.
      */

@@ -35,6 +35,9 @@
 *** expands on the *global* or *class-string* configuration options provided by `$globalConfig` (bool).
 *** allows for the config key to be specifically specified by adding support for `string` values.
 *** in addition to php's array key restrictions,
+* `ConfigManager`:
+** *new* class that handles loading the correct config based on the `ConfigAwareAttribute` options.
+** *new* `ConfigNotFoundException` thrown when the *key* is invalid.
 
 :leveloffset!:
 :leveloffset: +2
