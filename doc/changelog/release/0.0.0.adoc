@@ -4,3 +4,9 @@
 :revremark: -dev
 :version-label: Unconfirmed
 
+* ConfigAwareAttribute:
+** `$globalConfig`: deprecated and will be removed in the next version.
+** `$configKey` (bool|string):
+*** expands on the *global* or *class-string* configuration options provided by `$globalConfig` (bool).
+*** allows for the config key to be specifically specified by adding support for `string` values.
+*** in addition to php's array key restrictions,

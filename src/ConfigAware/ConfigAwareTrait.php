@@ -25,8 +25,11 @@ declare(strict_types=1);
 namespace Inane\Config\ConfigAware;
 
 use Inane\Config\Config;
-use Inane\Stdlib\Array\OptionsInterface;
-use Inane\Stdlib\Options;
+use Inane\Stdlib\{
+    Array\OptionsInterface,
+    Options
+};
+
 use function is_array;
 use function property_exists;
 

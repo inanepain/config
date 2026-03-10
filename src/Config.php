@@ -25,9 +25,11 @@ declare(strict_types=1);
 namespace Inane\Config;
 
 use Inane\Stdlib\Options;
+
 use function file_exists;
 use function glob;
 use function is_string;
+
 use const false;
 use const GLOB_BRACE;
 use const GLOB_NOSORT;
