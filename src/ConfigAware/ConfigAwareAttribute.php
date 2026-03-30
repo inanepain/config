@@ -27,12 +27,14 @@ namespace Inane\Config\ConfigAware;
 use Attribute;
 use Inane\Stdlib\Exception\InvalidArgumentException;
 
+use function is_bool;
 use function preg_match;
 
 /**
  * ConfigAwareAttribute
  *
  * // TODO: validate configKey
+ *
  * @version 0.3.0
  */
 #[Attribute(Attribute::TARGET_CLASS)]
@@ -82,13 +84,16 @@ final class ConfigAwareAttribute {
          *   - string - use the provided string as the custom key.
          *
          * @since 0.3.0
-         */ public bool|string $configKey = true, /**
-     * Whether the class uses the global or a custom configuration.
-     *   - true - global configuration.
-     *   - false - custom class-specific configuration.
-     *
-     * @deprecated Use $configKey instead.
-     */ public bool            $globalConfig = false,
+         */
+        public bool|string $configKey = true,
+        /**
+         * Whether the class uses the global or a custom configuration.
+         *   - true - global configuration.
+         *   - false - custom class-specific configuration.
+         *
+         * @deprecated Use $configKey instead.
+         */
+        public bool            $globalConfig = false,
     ) {
         // TODO: validate configKey
         $this->validateConfigKey($this->configKey);
@@ -109,6 +114,7 @@ final class ConfigAwareAttribute {
      */
     protected function isValidConfigKey(bool|string $key): bool {
         if (is_bool($key)) return true;
+
         return !self::$configKeyPattern || (bool)preg_match(self::$configKeyPattern, $key);
     }
 
