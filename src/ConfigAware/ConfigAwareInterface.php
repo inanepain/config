@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace Inane\Config\ConfigAware;
 
+use Inane\Config\ConfigInterface;
 use Inane\Stdlib\Array\OptionsInterface;
 
 /**
@@ -35,9 +36,9 @@ interface ConfigAwareInterface {
 	/**
 	 * configuration
 	 *
-	 * @param array|OptionsInterface $config configuration
+	 * @param array|OptionsInterface|ConfigInterface $config configuration
 	 *
 	 * @return void
 	 */
-	public function setConfig(array|OptionsInterface $config): void;
+	public function setConfig(array|OptionsInterface|ConfigInterface $config): void;
 }

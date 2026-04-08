@@ -25,10 +25,10 @@ declare(strict_types=1);
 namespace Inane\Config\ConfigAware;
 
 use Inane\Config\Config;
+use Inane\Config\ConfigInterface;
 use Inane\Stdlib\{
     Array\OptionsInterface,
-    Options
-};
+    Options};
 
 use function is_array;
 use function property_exists;
@@ -52,7 +52,7 @@ trait ConfigAwareTrait {
      *
      * @since 0.4.0 Looks for defaultConfig property to use as fallback and default values.
      */
-    public function setConfig(array|OptionsInterface $config): void {
+    public function setConfig(array|OptionsInterface|ConfigInterface $config): void {
         $class = Config::class;
         if (!is_array($config) && $config instanceof Options) $class = Options::class;
 

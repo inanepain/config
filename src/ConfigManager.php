@@ -86,12 +86,7 @@ final class ConfigManager {
 
         foreach($reflection->getAttributes(ConfigAwareAttribute::class) as $configAttribute) {
             $attribute = $configAttribute->newInstance();
-
-            if ($key = $attribute->getConfigKey($object::class)) {
-                $object->setConfig($this->config->getConfig($key));
-            } else {
-                $object->setConfig($this->config);
-            }
+            $object->setConfig($this->getConfig($attribute->getConfigKey($object::class)));
         }
 
         return $this->config;
@@ -100,22 +95,21 @@ final class ConfigManager {
     /**
      * Retrieves the configuration based on the provided key or the entire configuration object if no key is provided.
      *
-     * @param null|string $key The key to retrieve specific configuration. If null, returns the entire configuration object.
+     * @param false|string $key The key to retrieve specific configuration. If null, returns the entire configuration object.
      *
      * @return ConfigInterface The requested configuration or the entire configuration object.
      *
      * @throws ConfigNotFoundException Exception thrown when a requested configuration is not found.
      */
-    public function getConfig(?string $key = null): ConfigInterface {
-        if ($key !== null) {
-            $config = $this->config->getConfig($key);
+    public function getConfig(false|string $key = false): ConfigInterface {
+        if ($key === false) return $this->config;
 
-            if ($config === null) {
-                throw new ConfigNotFoundException("Configuration for key '$key' not found.");
-            }
+        $config = $this->config->getConfig($key);
+        if ($config === null) {
+            throw new ConfigNotFoundException("Configuration for key '$key' not found.");
         }
 
-        return $this->config;
+        return $config;
     }
 
     /**
