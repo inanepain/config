@@ -78,9 +78,7 @@ final class ConfigManager {
      * @return ConfigInterface The configuration instance that is applied to the object.
      */
     public function setConfigFor(?object $object = null): ConfigInterface {
-        if (!isset($this->config)) {
-            $this->setConfig();
-        }
+        if (!isset($this->config)) $this->setConfig();
 
         $reflection = new ReflectionObject($object);
 
@@ -102,6 +100,7 @@ final class ConfigManager {
      * @throws ConfigNotFoundException Exception thrown when a requested configuration is not found.
      */
     public function getConfig(false|string $key = false): ConfigInterface {
+        if (!isset($this->config)) $this->setConfig();
         if ($key === false) return $this->config;
 
         $config = $this->config->getConfig($key);
