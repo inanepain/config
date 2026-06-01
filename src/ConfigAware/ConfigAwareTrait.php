@@ -10,17 +10,17 @@
  *
  * PHP version 8.5
  *
- * @author Philip Michael Raab<philip@cathedral.co.za>
- * @package inanepain\config
+ * @author   Philip Michael Raab<philip@cathedral.co.za>
+ * @package  inanepain\config
  * @category config
  *
- * @license UNLICENSE
- * @license https://unlicense.org/UNLICENSE UNLICENSE
+ * @license  UNLICENSE
+ * @license  https://unlicense.org/UNLICENSE UNLICENSE
  *
  * _version_ $version
  */
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Inane\Config\ConfigAware;
 
@@ -42,15 +42,15 @@ trait ConfigAwareTrait {
     /**
      * Configuration
      *
-     * @var array|OptionsInterface
+     * @var array|Config|ConfigInterface|Options|OptionsInterface
      */
-    protected array|OptionsInterface $config;
+    protected array|Config|Options|OptionsInterface|ConfigInterface $config;
 
     /**
      * {@inheritDoc}
-     * @see \Inane\Config\ConfigAware\ConfigAwareInterface::setConfig()
-     *
      * @since 0.4.0 Looks for defaultConfig property to use as fallback and default values.
+     * @see   \Inane\Config\ConfigAware\ConfigAwareInterface::setConfig()
+     *
      */
     public function setConfig(array|OptionsInterface|ConfigInterface $config): void {
         $class = Config::class;

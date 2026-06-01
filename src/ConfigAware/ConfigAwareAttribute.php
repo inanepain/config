@@ -93,7 +93,7 @@ final class ConfigAwareAttribute {
          *
          * @deprecated Use $configKey instead.
          */
-        public bool            $globalConfig = false,
+        public bool        $globalConfig = false,
     ) {
         // TODO: validate configKey
         $this->validateConfigKey($this->configKey);
