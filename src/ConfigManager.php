@@ -65,7 +65,7 @@ final class ConfigManager {
     /**
      * Sets the configuration for the provided object based on its attributes.
      *
-     * The method initializes the configuration if it has not been set already.
+     * The method Initialises the configuration if it has not been set already.
      * Then, it inspects the attributes of the provided object using reflection.
      * If attributes implementing the ConfigAwareAttribute class are found, their
      * configuration keys are used to retrieve specific configurations and apply them
@@ -73,7 +73,7 @@ final class ConfigManager {
      *
      * @param object|null $object  The object for which the configuration is being set.
      *                             If null, no operation is performed on any object,
-     *                             though the configuration may still be initialized.
+     *                             though the configuration may still be initialised.
      *
      * @return ConfigInterface The configuration instance that is applied to the object.
      */
