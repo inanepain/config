@@ -1,2 +1,3 @@
 inanepain/config:
-  Configuration helpers.
+	Configuration helpers.
+	- git-attributes
